@@ -1,0 +1,9 @@
+.cardsArea {
+  display: flex;
+}
+.card {
+  width: 100%;
+}
+.card > img {
+  max-width: 80px;
+}
