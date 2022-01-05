@@ -3,31 +3,21 @@ import backFace from "../../assets/bf.webp";
 import "./cards.css";
 import React, { useState, useEffect } from "react";
 const characters = [
-  { id: "1", name: "A" },
-  { id: "2", name: "2" },
-  { id: "3", name: "3" },
-  { id: "4", name: "4" },
-  { id: "5", name: "5" },
-  { id: "6", name: "6" },
-  { id: "7", name: "7" },
-  { id: "8", name: "8" },
-  { id: "9", name: "9" },
-  { id: "10", name: "10" },
-  { id: "11", name: "J" },
-  { id: "12", name: "Q" },
-  { id: "13", name: "K" },
+  { rank: "1", name: "A" },
+  { rank: "2", name: "2" },
+  { rank: "3", name: "3" },
+  { rank: "4", name: "4" },
+  { rank: "5", name: "5" },
+  { rank: "6", name: "6" },
+  { rank: "7", name: "7" },
+  { rank: "8", name: "8" },
+  { rank: "9", name: "9" },
+  { rank: "10", name: "10" },
+  { rank: "11", name: "J" },
+  { rank: "12", name: "Q" },
+  { rank: "13", name: "K" },
 ];
-const deckEight = [
-  ...characters,
-  ...characters,
-  ...characters,
-  ...characters,
-  ...characters,
-  ...characters,
-  ...characters,
-  ...characters,
-];
-console.log(deckEight[0]);
+const deckEight = [];
 const columnsItem = {
   0: { items: [] },
   1: { items: [] },
@@ -75,16 +65,23 @@ const onDragEnd = (result, columns, setColumns) => {
       },
     });
   }
+  console.log(columns);
 };
 
 function CardSlot() {
   const [columns, setColumns] = useState(columnsItem);
+
   function shuffle() {
+    let idCounter = 0;
+    for (let y = 0; y < characters.length * 8; y++) {
+      deckEight.push({
+        id: idCounter,
+        card: characters[y % 13],
+      });
+      idCounter = idCounter + 1;
+    }
+    console.log(deckEight);
     let tmpCol = { ...columnsItem };
-    let x = [];
-    deckEight.map((crd) => {
-      x.push(crd.id);
-    });
     for (let i = 0; i < 104; i++) {
       let random = Math.ceil(Math.random() * (103 - i));
       if (i < 50) {
@@ -99,14 +96,27 @@ function CardSlot() {
             items: copiItem,
           },
         };
+      } else if (i >= 50 && i < 54) {
+        let tmpItems = tmpCol[i % 4];
+        let copiItem = [...tmpItems.items];
+        copiItem.splice(0, 0, deckEight[random]);
+        console.log(tmpCol);
+        tmpCol = {
+          ...tmpCol,
+          [i % 4]: {
+            ...tmpItems,
+            items: copiItem,
+          },
+        };
       }
       deckEight.splice(random, 1);
     }
-    console.log(tmpCol);
+    setColumns(tmpCol);
+    console.log(columns);
   }
   useEffect(() => {
     shuffle();
-  }, "");
+  }, []);
   return (
     <div className="cardsArea">
       <DragDropContext
@@ -146,7 +156,7 @@ function CardSlot() {
                         return (
                           <Draggable
                             key={item.id}
-                            draggableId={item.id}
+                            draggableId={item.id.toString()}
                             index={index}
                           >
                             {(provided, snapshot) => {
@@ -158,7 +168,7 @@ function CardSlot() {
                                   {...provided.dragHandleProps}
                                 >
                                   <img src={backFace} alt=""></img>
-                                  {item.name}
+                                  {item.card.name}
                                 </div>
                               );
                             }}
