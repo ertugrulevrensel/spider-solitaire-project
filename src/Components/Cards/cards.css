@@ -1,0 +1,17 @@
+.cardsArea {
+  display: flex;
+}
+.cardBack {
+  width: 100%;
+  border-radius: 50px;
+}
+.cardBack > img {
+  max-width: 80px;
+  border-radius: 8px;
+}
+.cardFront {
+  width: 80px;
+  background-color: gray;
+  height: 120px;
+  border-radius: 8px;
+}
