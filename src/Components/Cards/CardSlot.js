@@ -12,31 +12,41 @@ function onDragEnd(result, columns, setColumns) {
     const destCol = columns[destination.droppableId];
     const sourceItems = [...sourceCol.items];
     const destItems = [...destCol.items];
-    const [removed] = sourceItems.splice(source.index, 1);
-    destItems.splice(destination.index, 0, removed);
-    setColumns({
-      ...columns,
-      [source.droppableId]: {
-        ...sourceCol,
-        items: sourceItems,
-      },
-      [destination.droppableId]: {
-        ...destCol,
-        items: destItems,
-      },
-    });
+    console.log(result);
+    if (
+      (result.draggableId % 13) + 1 ==
+      destItems[destItems.length - 1].id % 13
+    ) {
+      const [removed] = sourceItems.splice(source.index, 1);
+      if (sourceItems.length > 0) {
+        sourceItems[sourceItems.length - 1].isDrag = true;
+        sourceItems[sourceItems.length - 1].isOpen = true;
+      }
+      destItems.splice(destItems.length, 0, removed);
+      setColumns({
+        ...columns,
+        [source.droppableId]: {
+          ...sourceCol,
+          items: sourceItems,
+        },
+        [destination.droppableId]: {
+          ...destCol,
+          items: destItems,
+        },
+      });
+    }
   } else {
-    const column = columns[source.droppableId];
-    const copiedItems = [...column.items];
-    const [removed] = copiedItems.splice(source.index, 1);
-    copiedItems.splice(destination.index, 0, removed);
-    setColumns({
-      ...columns,
-      [source.droppableId]: {
-        ...column,
-        items: copiedItems,
-      },
-    });
+    // const column = columns[source.droppableId];
+    // const copiedItems = [...column.items];
+    // const [removed] = copiedItems.splice(source.index, 1);
+    // copiedItems.splice(destination.index, 0, removed);
+    // setColumns({
+    //   ...columns,
+    //   [source.droppableId]: {
+    //     ...column,
+    //     items: copiedItems,
+    //   },
+    // });
   }
 }
 
@@ -103,7 +113,9 @@ function CardSlot() {
                               </Draggable>
                             ) : (
                               <div className="cardBack">
-                                <img src={backFace} alt=""></img>
+                                {item.isOpen ? null : (
+                                  <img src={backFace} alt=""></img>
+                                )}
                                 {item.card.name}
                               </div>
                             )}
