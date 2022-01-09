@@ -25,7 +25,7 @@ export const itemColumns = {
   8: { items: [] },
   9: { items: [] },
 };
-export function shuffle(columns, setColumns) {
+export function shuffle(columns, setColumns, sideDesc, setSideDesc) {
   let deckEight = [];
   let idCounter = 0;
   for (let y = 0; y < card.length * 8; y++) {
@@ -38,6 +38,7 @@ export function shuffle(columns, setColumns) {
     idCounter = idCounter + 1;
   }
   let tmpCol = { ...itemColumns };
+  let sideCard = [];
   for (let i = 0; i < 104; i++) {
     let random = Math.ceil(Math.random() * (103 - i));
     if (i < 50) {
@@ -63,9 +64,12 @@ export function shuffle(columns, setColumns) {
           items: copiItem,
         },
       };
+    } else {
+      sideCard.push(deckEight[random]);
     }
     deckEight.splice(random, 1);
   }
+  setSideDesc(sideCard);
   for (let r = 0; r < 10; r++) {
     tmpCol[r].items[tmpCol[r].items.length - 1].isDrag = true;
     tmpCol[r].items[tmpCol[r].items.length - 1].isOpen = true;

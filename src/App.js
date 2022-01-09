@@ -1,11 +1,12 @@
-import React from "react";
+import React, { useState } from "react";
 import "./App.css";
 import Cards from "./Components/Cards/CardSlot";
 
 function App() {
+  const [sideDesc, setSideDesc] = useState();
   return (
     <div className="App">
-      <Cards />
+      <Cards sideDesc={sideDesc} setSideDesc={setSideDesc} />
     </div>
   );
 }
