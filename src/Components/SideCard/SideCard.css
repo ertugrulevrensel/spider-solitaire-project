@@ -1,0 +1,8 @@
+.sideCard > img {
+  width: 80px;
+}
+
+.sideCard {
+  display: grid;
+  grid-template-columns: repeat(20, 2rem);
+}
