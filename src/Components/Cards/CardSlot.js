@@ -1,6 +1,6 @@
 import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd";
-import backFace from "../../assets/bf.webp";
-import "./cards.css";
+import backFace from "../../assets/bf3.png";
+import "./cards.scss";
 import React, { useState, useEffect } from "react";
 import { itemColumns, shuffle } from "../Deck";
 import SideCard from "../SideCard/SideCard";
@@ -25,6 +25,15 @@ function CardSlot(props) {
     );
   }
 
+  function dragStyle(style, snapshot) {
+    if (snapshot.isDragging) {
+      return {
+        ...style,
+        transitionDuration: `0.001s`,
+      };
+    }
+  }
+
   useEffect(() => {
     shuffle(setColumns, props.sideDesc, props.setSideDesc);
   }, "");
@@ -40,9 +49,6 @@ function CardSlot(props) {
                   return (
                     <div
                       style={{
-                        background: snapshot.isDraggingOver
-                          ? "lightblue"
-                          : "lightgray",
                         padding: 4,
                         width: "100%",
                         height: 500,
@@ -57,38 +63,42 @@ function CardSlot(props) {
                       {col.items.map((item, index) => {
                         return (
                           <div key={item.id}>
-                            {item.isOpen ? (
-                              <>
-                                {item.isDrag ? (
-                                  <Draggable
-                                    draggableId={item.id.toString()}
-                                    index={index}
-                                    isDragDisabled={!item.isDrag}
+                            {item.isDrag ? (
+                              <Draggable
+                                draggableId={item.id.toString()}
+                                index={index}
+                                isDragDisabled={!item.isDrag}
+                              >
+                                {(provided, snapshot) => (
+                                  <div
+                                    id={item.id}
+                                    className="cardFront d-flex p-relative"
+                                    ref={provided.innerRef}
+                                    {...provided.draggableProps}
+                                    {...provided.dragHandleProps}
+                                    style={dragStyle(
+                                      provided.draggableProps.style,
+                                      snapshot
+                                    )}
                                   >
-                                    {(provided) => {
-                                      return (
-                                        <div
-                                          id={item.id}
-                                          className="cardFront"
-                                          ref={provided.innerRef}
-                                          {...provided.draggableProps}
-                                          {...provided.dragHandleProps}
-                                        >
-                                          {item.card.name}
-                                        </div>
-                                      );
-                                    }}
-                                  </Draggable>
-                                ) : (
-                                  <div className="cardFront">
-                                    {item.card.name}
+                                    <p>
+                                      <b>{item.card.name}</b>
+                                    </p>
+                                    <div className="d-flex full-w full-h align-center justify-center p-absolute">
+                                      <span>♠</span>
+                                    </div>
                                   </div>
                                 )}
-                              </>
+                              </Draggable>
                             ) : (
                               <div className="cardFront">
-                                <img src={backFace} alt=""></img>
-                                {item.card.name}
+                                {item.isOpen ? (
+                                  <>
+                                    <p>{item.card.name}</p>
+                                  </>
+                                ) : (
+                                  <img src={backFace} alt=""></img>
+                                )}
                               </div>
                             )}
                           </div>

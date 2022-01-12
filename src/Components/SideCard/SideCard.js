@@ -1,7 +1,7 @@
 import React from "react";
 import { sideCards } from "../Deck";
-import backFace from "../../assets/bf.webp";
-import "./SideCard.css";
+import backFace from "../../assets/bf3.png";
+import "./SideCard.scss";
 function SideCard(props) {
   function stockCard() {
     let tmpCol = props.columns;

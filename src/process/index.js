@@ -1,5 +1,5 @@
 var belowIndexList;
-let syc = true;
+let isRegular = true;
 
 export function dragEnd(
   result,
@@ -8,12 +8,13 @@ export function dragEnd(
   setCompleteDeckCount,
   completeDeckCount
 ) {
-  if (!result.destination || !syc) {
+  if (!result.destination || !isRegular) {
     for (let i = 1; i < belowIndexList.length; i++) {
       document.getElementById(belowIndexList[i].id).classList.toggle("d-none");
     }
     return;
   }
+
   const { source, destination } = result;
 
   if (source.droppableId !== destination.droppableId) {
@@ -25,6 +26,7 @@ export function dragEnd(
 
     if (destItems.length < 1) {
       const removed = sourceItems.splice(source.index, belowIndexList.length);
+
       if (sourceItems.length > 0) {
         sourceItems[sourceItems.length - 1].isDrag = true;
         sourceItems[sourceItems.length - 1].isOpen = true;
@@ -33,6 +35,7 @@ export function dragEnd(
       removed.forEach((item) => {
         destItems.push(item);
       });
+
       tmpCol = {
         ...tmpCol,
         [source.droppableId]: {
@@ -44,6 +47,7 @@ export function dragEnd(
           items: destItems,
         },
       };
+
       setColumns(tmpCol);
     }
     if (
@@ -71,18 +75,18 @@ export function dragEnd(
           items: destItems,
         },
       };
-      setColumns(tmpCol);
 
       //------------------------------------//
 
       for (let i = 0; i < 10; i++) {
         let isCmpltItem;
         let isCmpltRank = [];
-        let syc1 = 0;
+        let index = 0;
         let isCmplt = true;
+
         tmpCol[i].items.forEach((item) => {
           if (item.card.rank === 13 && item.isOpen) {
-            isCmpltItem = tmpCol[i].items.slice(syc1, tmpCol[i].items.length);
+            isCmpltItem = tmpCol[i].items.slice(index, tmpCol[i].items.length);
             isCmpltItem.forEach((items) => {
               isCmpltRank.push(items.card.rank);
             });
@@ -96,10 +100,10 @@ export function dragEnd(
             } else {
               isCmplt = false;
             }
+
             if (isCmplt) {
-              console.log("object");
               setCompleteDeckCount(completeDeckCount + 1);
-              tmpCol[i].items.splice(syc1, 13);
+              tmpCol[i].items.splice(index, 13);
 
               if (tmpCol[i].items.length > 0) {
                 tmpCol[i].items[tmpCol[i].items.length - 1].isOpen = true;
@@ -107,9 +111,12 @@ export function dragEnd(
               }
             }
           }
-          syc1++;
+
+          index++;
         });
       }
+
+      setColumns(tmpCol);
     }
   }
 
@@ -119,7 +126,7 @@ export function dragEnd(
 }
 
 export function dragStart(start, columns) {
-  syc = true;
+  isRegular = true;
   const { source } = start;
   const columnList = columns[source.droppableId].items;
 
@@ -135,11 +142,11 @@ export function dragStart(start, columns) {
 
   for (let i = 0; i < belowListRank.length - 1; i++) {
     if (belowListRank[i + 1] + 1 !== belowListRank[i]) {
-      syc = false;
+      isRegular = false;
     }
   }
 
-  if (syc === true) {
+  if (isRegular === true) {
     for (let i = 1; i < belowIndexList.length; i++) {
       document.getElementById(belowIndexList[i].id).classList.toggle("d-none");
     }

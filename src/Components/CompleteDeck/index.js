@@ -1,14 +1,13 @@
 import React from "react";
-import backFace from "../../assets/bf.webp";
+import backFace from "../../assets/bf3.png";
 
 function CompleteDeck(props) {
-  console.log(props.completeDeckCount);
   return (
-    <div>
+    <>
       {[...Array(props.completeDeckCount)].map((e, i) => {
         return <img key={i} src={backFace} alt=""></img>;
       })}
-    </div>
+    </>
   );
 }
 

@@ -69,7 +69,6 @@ export function shuffle(setColumns, sideDesc, setSideDesc) {
       deckEight[random].isOpen = true;
       deckEight[random].isDrag = true;
       sideCard.push(deckEight[random]);
-      // console.log(sideCard);
     }
     deckEight.splice(random, 1);
   }
