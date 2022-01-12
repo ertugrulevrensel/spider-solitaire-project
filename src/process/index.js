@@ -1,7 +1,13 @@
 var belowIndexList;
 let syc = true;
 
-export function dragEnd(result, columns, setColumns) {
+export function dragEnd(
+  result,
+  columns,
+  setColumns,
+  setCompleteDeckCount,
+  completeDeckCount
+) {
   if (!result.destination || !syc) {
     for (let i = 1; i < belowIndexList.length; i++) {
       document.getElementById(belowIndexList[i].id).classList.toggle("d-none");
@@ -17,6 +23,29 @@ export function dragEnd(result, columns, setColumns) {
     const sourceItems = [...sourceCol.items];
     const destItems = [...destCol.items];
 
+    if (destItems.length < 1) {
+      const removed = sourceItems.splice(source.index, belowIndexList.length);
+      if (sourceItems.length > 0) {
+        sourceItems[sourceItems.length - 1].isDrag = true;
+        sourceItems[sourceItems.length - 1].isOpen = true;
+      }
+
+      removed.forEach((item) => {
+        destItems.push(item);
+      });
+      tmpCol = {
+        ...tmpCol,
+        [source.droppableId]: {
+          ...sourceCol,
+          items: sourceItems,
+        },
+        [destination.droppableId]: {
+          ...destCol,
+          items: destItems,
+        },
+      };
+      setColumns(tmpCol);
+    }
     if (
       (result.draggableId % 13) + 1 ===
       destItems[destItems.length - 1].id % 13
@@ -69,6 +98,7 @@ export function dragEnd(result, columns, setColumns) {
             }
             if (isCmplt) {
               console.log("object");
+              setCompleteDeckCount(completeDeckCount + 1);
               tmpCol[i].items.splice(syc1, 13);
 
               if (tmpCol[i].items.length > 0) {

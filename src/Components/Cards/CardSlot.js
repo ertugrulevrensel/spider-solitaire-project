@@ -4,17 +4,25 @@ import "./cards.css";
 import React, { useState, useEffect } from "react";
 import { itemColumns, shuffle } from "../Deck";
 import SideCard from "../SideCard/SideCard";
+import CompleteDeck from "../CompleteDeck";
 import { dragEnd, dragStart } from "../../process";
 
 function CardSlot(props) {
   const [columns, setColumns] = useState(itemColumns);
+  const [completeDeckCount, setCompleteDeckCount] = useState(0);
 
   function onDragStart(start) {
     dragStart(start, columns);
   }
 
   function onDragEnd(result) {
-    dragEnd(result, columns, setColumns);
+    dragEnd(
+      result,
+      columns,
+      setColumns,
+      setCompleteDeckCount,
+      completeDeckCount
+    );
   }
 
   useEffect(() => {
@@ -95,7 +103,13 @@ function CardSlot(props) {
           })}
         </DragDropContext>
       </div>
-      <SideCard columns={columns} setColumns={setColumns} />
+      <div className="d-flex space-between stockDeck">
+        <SideCard columns={columns} setColumns={setColumns} />
+        <CompleteDeck
+          completeDeckCount={completeDeckCount}
+          setCompleteDeckCount={setCompleteDeckCount}
+        />
+      </div>
     </>
   );
 }

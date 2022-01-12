@@ -75,3 +75,6 @@ input {
 .v-visible {
   visibility: visible;
 }
+img {
+  width: 80px;
+}
