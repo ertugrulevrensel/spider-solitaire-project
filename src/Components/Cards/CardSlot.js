@@ -6,7 +6,7 @@ import { shuffle } from "../../Deck";
 import SideCard from "../SideCard/SideCard";
 import CompleteDeck from "../CompleteDeck";
 import { dragEnd, dragStart } from "../../dragProcess";
-import { context } from "../../context";
+import { context, timerContext } from "../../context";
 
 function CardSlot() {
   const {
@@ -17,6 +17,8 @@ function CardSlot() {
     points,
     setPoints,
   } = useContext(context);
+
+  const { reset } = useContext(timerContext);
 
   function onDragStart(start) {
     dragStart(start, columns);
@@ -44,8 +46,8 @@ function CardSlot() {
   }
 
   useEffect(() => {
-    shuffle(setColumns, setCompleteDeckCount, setPoints);
-  }, "");
+    shuffle(setColumns, setCompleteDeckCount, setPoints, reset);
+  }, []); //eslint-disable-line
 
   return (
     <>

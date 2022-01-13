@@ -1,10 +1,11 @@
 import React, { useState } from "react";
 import "./App.css";
 import Cards from "./Components/Cards/CardSlot";
-import { context } from "./context";
+import { context, timerContext } from "./context";
 import { itemColumns } from "./Deck";
 import Header from "./Components/header";
 import EndGame from "./Components/endGame";
+import { useStopwatch } from "react-timer-hook";
 
 function App() {
   const [columns, setColumns] = useState(itemColumns);
@@ -20,13 +21,17 @@ function App() {
     setPoints,
   };
 
+  const { seconds, minutes, reset, pause } = useStopwatch({ autoStart: true });
+
   return (
     <div className="App">
-      <context.Provider value={data}>
-        <Header />
-        <Cards />
-        {completeDeckCount === 8 ? <EndGame /> : null}
-      </context.Provider>
+      <timerContext.Provider value={{ seconds, minutes, reset, pause }}>
+        <context.Provider value={data}>
+          <Header />
+          <Cards />
+          {completeDeckCount === 8 ? <EndGame /> : null}
+        </context.Provider>
+      </timerContext.Provider>
     </div>
   );
 }

@@ -26,7 +26,8 @@ export const itemColumns = {
   9: { items: [] },
 };
 export let sideDesc = [];
-export function shuffle(setColumns, setCompleteDeckCount, setPoints) {
+export function shuffle(setColumns, setCompleteDeckCount, setPoints, reset) {
+  reset();
   setPoints(500);
   setCompleteDeckCount(0);
   sideDesc = [];
