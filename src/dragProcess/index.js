@@ -64,7 +64,6 @@ export function dragEnd(
       removed.forEach((item) => {
         destItems.push(item);
       });
-      console.log(sourceItems);
       tmpCol = {
         ...tmpCol,
         [source.droppableId]: {
@@ -177,7 +176,6 @@ export function isCompleteDeck(
 }
 
 export function isDraggable(columnItem) {
-  console.log(columnItem);
   let cnt = true;
 
   for (let y = 1; y < columnItem.length; y++) {

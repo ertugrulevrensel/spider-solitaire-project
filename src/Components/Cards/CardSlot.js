@@ -59,15 +59,7 @@ function CardSlot() {
                 {(provided) => {
                   return (
                     <div
-                      style={{
-                        padding: 4,
-                        width: "100%",
-                        height: 500,
-                        margin: 10,
-                        justifyContent: "space-between",
-                        display: "grid",
-                        gridTemplateRows: "repeat(20,2rem)",
-                      }}
+                      className="dropArea"
                       {...provided.droppableProps}
                       ref={provided.innerRef}
                     >
@@ -78,7 +70,6 @@ function CardSlot() {
                               <Draggable
                                 draggableId={item.id.toString()}
                                 index={index}
-                                // isDragDisabled={!item.isDrag}
                               >
                                 {(provided, snapshot) => (
                                   <div

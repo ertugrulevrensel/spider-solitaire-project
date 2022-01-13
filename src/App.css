@@ -3,11 +3,13 @@
   margin: 0;
   border: 0;
   padding: 0;
-  font-family: "Nunito", sans-serif;
+  /* font-family: "Nunito", sans-serif; */
+  font-family: "EB Garamond", serif;
 }
 body {
   background-color: #f2f2f2;
   background-image: url("./assets/background.webp");
+  width: 100%;
 }
 button {
   cursor: pointer;
@@ -78,8 +80,4 @@ input {
 }
 .v-visible {
   visibility: visible;
-}
-img {
-  width: 90px;
-  border-radius: 12px;
 }

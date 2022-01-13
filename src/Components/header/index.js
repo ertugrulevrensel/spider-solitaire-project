@@ -15,16 +15,15 @@ function Header() {
         Time: {minutes}:{seconds}
       </p>
       <p>Score: {points}</p>
-      <p className="d-flex align-center">
+      <div
+        onClick={() =>
+          shuffle(setColumns, setCompleteDeckCount, setPoints, reset)
+        }
+        className="d-flex align-center restart"
+      >
         <p>Restart </p>
-        <img
-          onClick={() =>
-            shuffle(setColumns, setCompleteDeckCount, setPoints, reset)
-          }
-          src={restart}
-          alt="restart"
-        ></img>
-      </p>
+        <img src={restart} alt="restart"></img>
+      </div>
     </div>
   );
 }

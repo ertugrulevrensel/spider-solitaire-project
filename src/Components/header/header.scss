@@ -1,21 +1,43 @@
 .header {
   background-color: #002c5f;
   box-shadow: 5px 5px 5px 5px black;
-  & > p > img {
-    width: 25px;
+  & > div {
+    border: 3px solid rgb(41, 218, 41);
+    border-radius: 8px;
+    color: white;
     cursor: pointer;
-    margin-left: 10px;
+    font-size: 1.2rem;
+    & > img {
+      width: 25px;
+      margin-left: 10px;
+    }
   }
   & > * {
     padding: 5px;
   }
+
   & > p {
     color: white;
     border: 3px solid rgb(41, 218, 41);
     border-radius: 8px;
     padding: 5px;
     margin: 5px;
-    font-family: "EB Garamond", serif;
     font-size: 1.2rem;
+  }
+}
+@media screen and (max-width: 980px) {
+  .header {
+    & > p {
+      font-size: 1rem;
+    }
+  }
+  .restart {
+    & > p {
+      font-size: 1rem;
+    }
+    & > img {
+      width: 15px;
+      margin-left: 5px;
+    }
   }
 }
