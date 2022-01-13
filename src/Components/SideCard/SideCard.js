@@ -1,28 +1,36 @@
-import React from "react";
-import { sideCards } from "../Deck";
-import backFace from "../../assets/bf3.png";
+import React, { useContext } from "react";
+import { sideDesc } from "../../Deck";
+import backFace from "../../assets/bf3.webp";
 import "./SideCard.scss";
-function SideCard(props) {
+import { context } from "../../context";
+import { isDraggable } from "../../dragProcess";
+
+function SideCard() {
+  const { columns, setColumns } = useContext(context);
+
   function stockCard() {
-    let tmpCol = props.columns;
+    let tmpCol = columns;
+
     for (let i = 0; i < 10; i++) {
       let tmpItems = tmpCol[i];
       let copiItem = [...tmpItems.items];
-      copiItem.splice(copiItem.length, 0, sideCards.splice(0, 1)[0]);
+      copiItem.splice(copiItem.length, 0, sideDesc.splice(0, 1)[0]);
+
       tmpCol = {
         ...tmpCol,
         [i]: {
           ...tmpItems,
-          items: copiItem,
+          items: isDraggable(copiItem),
         },
       };
     }
-    props.setColumns(tmpCol);
+
+    setColumns(tmpCol);
   }
 
   return (
     <div className="sideCard">
-      {[...Array(sideCards.length / 10)].map((e, i) => {
+      {[...Array(sideDesc.length / 10)].map((e, i) => {
         return (
           <img onClick={() => stockCard()} key={i} src={backFace} alt=""></img>
         );

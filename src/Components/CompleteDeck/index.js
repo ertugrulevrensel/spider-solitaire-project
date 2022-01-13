@@ -1,13 +1,18 @@
-import React from "react";
-import backFace from "../../assets/bf3.png";
+import React, { useContext } from "react";
+import backFace from "../../assets/bf3.webp";
+import { context } from "../../context";
+import "./completeDeck.scss";
 
-function CompleteDeck(props) {
+function CompleteDeck() {
+  const { completeDeckCount } = useContext(context);
   return (
-    <>
-      {[...Array(props.completeDeckCount)].map((e, i) => {
-        return <img key={i} src={backFace} alt=""></img>;
+    <div className="d-flex">
+      {[...Array(completeDeckCount)].map((e, i) => {
+        return (
+          <img className="completeDeck" key={i} src={backFace} alt=""></img>
+        );
       })}
-    </>
+    </div>
   );
 }
 

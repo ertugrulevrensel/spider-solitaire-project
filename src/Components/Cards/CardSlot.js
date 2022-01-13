@@ -1,15 +1,22 @@
 import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd";
-import backFace from "../../assets/bf3.png";
+import backFace from "../../assets/bf3.webp";
 import "./cards.scss";
-import React, { useState, useEffect } from "react";
-import { itemColumns, shuffle } from "../Deck";
+import React, { useEffect, useContext } from "react";
+import { shuffle } from "../../Deck";
 import SideCard from "../SideCard/SideCard";
 import CompleteDeck from "../CompleteDeck";
-import { dragEnd, dragStart } from "../../process";
+import { dragEnd, dragStart } from "../../dragProcess";
+import { context } from "../../context";
 
-function CardSlot(props) {
-  const [columns, setColumns] = useState(itemColumns);
-  const [completeDeckCount, setCompleteDeckCount] = useState(0);
+function CardSlot() {
+  const {
+    columns,
+    setColumns,
+    completeDeckCount,
+    setCompleteDeckCount,
+    points,
+    setPoints,
+  } = useContext(context);
 
   function onDragStart(start) {
     dragStart(start, columns);
@@ -21,7 +28,9 @@ function CardSlot(props) {
       columns,
       setColumns,
       setCompleteDeckCount,
-      completeDeckCount
+      completeDeckCount,
+      points,
+      setPoints
     );
   }
 
@@ -35,17 +44,17 @@ function CardSlot(props) {
   }
 
   useEffect(() => {
-    shuffle(setColumns, props.sideDesc, props.setSideDesc);
+    shuffle(setColumns, setCompleteDeckCount, setPoints);
   }, "");
 
   return (
     <>
-      <div className="cardsArea">
+      <div className="d-flex">
         <DragDropContext onDragStart={onDragStart} onDragEnd={onDragEnd}>
           {Object.entries(columns).map(([id, col]) => {
             return (
               <Droppable key={id} droppableId={id}>
-                {(provided, snapshot) => {
+                {(provided) => {
                   return (
                     <div
                       style={{
@@ -67,12 +76,12 @@ function CardSlot(props) {
                               <Draggable
                                 draggableId={item.id.toString()}
                                 index={index}
-                                isDragDisabled={!item.isDrag}
+                                // isDragDisabled={!item.isDrag}
                               >
                                 {(provided, snapshot) => (
                                   <div
                                     id={item.id}
-                                    className="cardFront d-flex p-relative"
+                                    className="card d-flex p-relative"
                                     ref={provided.innerRef}
                                     {...provided.draggableProps}
                                     {...provided.dragHandleProps}
@@ -91,7 +100,7 @@ function CardSlot(props) {
                                 )}
                               </Draggable>
                             ) : (
-                              <div className="cardFront">
+                              <div className="card">
                                 {item.isOpen ? (
                                   <>
                                     <p>{item.card.name}</p>
@@ -114,11 +123,8 @@ function CardSlot(props) {
         </DragDropContext>
       </div>
       <div className="d-flex space-between stockDeck">
-        <SideCard columns={columns} setColumns={setColumns} />
-        <CompleteDeck
-          completeDeckCount={completeDeckCount}
-          setCompleteDeckCount={setCompleteDeckCount}
-        />
+        <SideCard />
+        <CompleteDeck />
       </div>
     </>
   );

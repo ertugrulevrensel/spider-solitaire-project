@@ -6,7 +6,9 @@ export function dragEnd(
   columns,
   setColumns,
   setCompleteDeckCount,
-  completeDeckCount
+  completeDeckCount,
+  points,
+  setPoints
 ) {
   if (!result.destination || !isRegular) {
     for (let i = 1; i < belowIndexList.length; i++) {
@@ -14,10 +16,10 @@ export function dragEnd(
     }
     return;
   }
-
   const { source, destination } = result;
 
   if (source.droppableId !== destination.droppableId) {
+    setPoints(points - 10);
     let tmpCol = columns;
     const sourceCol = columns[source.droppableId];
     const destCol = columns[destination.droppableId];
@@ -40,15 +42,13 @@ export function dragEnd(
         ...tmpCol,
         [source.droppableId]: {
           ...sourceCol,
-          items: sourceItems,
+          items: isDraggable(sourceItems),
         },
         [destination.droppableId]: {
           ...destCol,
-          items: destItems,
+          items: isDraggable(destItems),
         },
       };
-
-      setColumns(tmpCol);
     }
     if (
       (result.draggableId % 13) + 1 ===
@@ -64,60 +64,30 @@ export function dragEnd(
       removed.forEach((item) => {
         destItems.push(item);
       });
+      console.log(sourceItems);
       tmpCol = {
         ...tmpCol,
         [source.droppableId]: {
           ...sourceCol,
-          items: sourceItems,
+          items: isDraggable(sourceItems),
         },
         [destination.droppableId]: {
           ...destCol,
-          items: destItems,
+          items: isDraggable(destItems),
         },
       };
 
-      //------------------------------------//
+      //------------------------------------// complete column control
 
-      for (let i = 0; i < 10; i++) {
-        let isCmpltItem;
-        let isCmpltRank = [];
-        let index = 0;
-        let isCmplt = true;
-
-        tmpCol[i].items.forEach((item) => {
-          if (item.card.rank === 13 && item.isOpen) {
-            isCmpltItem = tmpCol[i].items.slice(index, tmpCol[i].items.length);
-            isCmpltItem.forEach((items) => {
-              isCmpltRank.push(items.card.rank);
-            });
-
-            if (isCmpltRank.length === 13) {
-              for (let y = 0; y < isCmpltRank.length - 1; y++) {
-                if (isCmpltRank[y] - 1 !== isCmpltRank[y + 1]) {
-                  isCmplt = false;
-                }
-              }
-            } else {
-              isCmplt = false;
-            }
-
-            if (isCmplt) {
-              setCompleteDeckCount(completeDeckCount + 1);
-              tmpCol[i].items.splice(index, 13);
-
-              if (tmpCol[i].items.length > 0) {
-                tmpCol[i].items[tmpCol[i].items.length - 1].isOpen = true;
-                tmpCol[i].items[tmpCol[i].items.length - 1].isDrag = true;
-              }
-            }
-          }
-
-          index++;
-        });
-      }
-
-      setColumns(tmpCol);
+      isCompleteDeck(
+        tmpCol,
+        setCompleteDeckCount,
+        completeDeckCount,
+        points,
+        setPoints
+      );
     }
+    setColumns(tmpCol);
   }
 
   for (let i = 1; i < belowIndexList.length; i++) {
@@ -157,4 +127,73 @@ export function dragStart(start, columns) {
     }
     return;
   }
+}
+
+export function isCompleteDeck(
+  tmpCol,
+  setCompleteDeckCount,
+  completeDeckCount,
+  points,
+  setPoints
+) {
+  for (let i = 0; i < 10; i++) {
+    let isCmpltItem;
+    let isCmpltRank = [];
+    let index = 0;
+    let isCmplt = true;
+
+    tmpCol[i].items.forEach((item) => {
+      if (item.card.rank === 13 && item.isOpen) {
+        isCmpltItem = tmpCol[i].items.slice(index, tmpCol[i].items.length);
+        isCmpltItem.forEach((items) => {
+          isCmpltRank.push(items.card.rank);
+        });
+
+        if (isCmpltRank.length === 13) {
+          for (let y = 0; y < isCmpltRank.length - 1; y++) {
+            if (isCmpltRank[y] - 1 !== isCmpltRank[y + 1]) {
+              isCmplt = false;
+            }
+          }
+        } else {
+          isCmplt = false;
+        }
+
+        if (isCmplt) {
+          setCompleteDeckCount(completeDeckCount + 1);
+          tmpCol[i].items.splice(index, 13);
+
+          if (tmpCol[i].items.length > 0) {
+            tmpCol[i].items[tmpCol[i].items.length - 1].isOpen = true;
+            tmpCol[i].items[tmpCol[i].items.length - 1].isDrag = true;
+          }
+          setPoints(points + 200);
+        }
+      }
+
+      index++;
+    });
+  }
+}
+
+export function isDraggable(columnItem) {
+  console.log(columnItem);
+  let cnt = true;
+
+  for (let y = 1; y < columnItem.length; y++) {
+    if (
+      columnItem[columnItem.length - 1].card.rank + y ===
+        columnItem[columnItem.length - y - 1].card.rank &&
+      cnt
+    ) {
+      if (columnItem[columnItem.length - y - 1].isOpen) {
+        columnItem[columnItem.length - y - 1].isDrag = true;
+      }
+    } else {
+      columnItem[columnItem.length - y - 1].isDrag = false;
+      cnt = false;
+    }
+  }
+
+  return columnItem;
 }

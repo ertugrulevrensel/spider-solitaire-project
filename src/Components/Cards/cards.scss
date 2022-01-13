@@ -1,13 +1,9 @@
-.cardsArea {
-  display: flex;
-}
-.cardFront {
+.card {
   width: 90px;
   background-color: #dfdfdf;
   height: 126px;
   border-radius: 12px;
-  transform: none;
-  transition-duration: 0.001s;
+  box-shadow: 3px 3px 3px 3px black;
   & > p {
     font-family: "EB Garamond", serif;
     font-size: 1.5rem;
@@ -20,4 +16,6 @@
 }
 .stockDeck {
   padding: 10px;
+}
+.cardShadow {
 }

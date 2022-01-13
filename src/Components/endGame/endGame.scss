@@ -1,0 +1,19 @@
+.endGameModal {
+  inset: 0;
+  z-index: 1;
+}
+.endGame {
+  background-color: white;
+  padding: 20px;
+  border-radius: 12px;
+  & > * {
+    margin: 10px;
+  }
+  & > img {
+    width: 50px;
+    cursor: pointer;
+  }
+}
+.bg4b9ce2O7 {
+  background-color: rgba(75, 156, 226, 0.7);
+}
