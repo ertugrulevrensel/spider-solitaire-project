@@ -8,9 +8,7 @@
   grid-template-rows: repeat(20, 2rem);
 }
 .card {
-  width: 100%;
-  min-width: 30px;
-  max-width: 90px;
+  width: 90px;
   background-color: #dfdfdf;
   height: 126px;
   border-radius: 12px;
@@ -34,11 +32,13 @@
 }
 @media screen and (max-width: 1180px) {
   .card {
+    width: 70px;
     height: 95px;
   }
 }
 @media screen and (max-width: 980px) {
   .card {
+    width: 50px;
     height: 80px;
     & > p {
       font-size: 1.2rem;

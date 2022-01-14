@@ -1,8 +1,10 @@
 .completeDeck {
   margin: 0 5px;
+  width: 80px;
+  border-radius: 12px;
 }
 @media screen and (max-width: 980px) {
-  .sideCard > img {
+  .completeDeck {
     width: 50px;
   }
 }
