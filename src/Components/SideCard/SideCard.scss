@@ -1,7 +1,10 @@
 .sideCard {
+  // inset: 0;
+  position: fixed;
   display: grid;
   grid-template-columns: repeat(20, 1rem);
   width: 100%;
+  bottom: 5%;
   & > img {
     width: 80px;
     border-radius: 12px;

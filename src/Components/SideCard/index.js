@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import { sideDesc } from "../../Deck";
+import { sideDesc } from "../../deck";
 import backFace from "../../assets/bf3.webp";
 import "./SideCard.scss";
 import { context } from "../../context";

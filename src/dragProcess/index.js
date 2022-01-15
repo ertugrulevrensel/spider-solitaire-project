@@ -10,6 +10,7 @@ export function dragEnd(
   points,
   setPoints
 ) {
+  setCompleteDeckCount(completeDeckCount + 1);
   if (!result.destination || !isRegular) {
     for (let i = 1; i < belowIndexList.length; i++) {
       document.getElementById(belowIndexList[i].id).classList.toggle("d-none");

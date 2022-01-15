@@ -2,7 +2,7 @@ import React, { useContext } from "react";
 import "./header.scss";
 import restart from "../../assets/restart.png";
 import { context, timerContext } from "../../context";
-import { shuffle } from "../../Deck";
+import { shuffle } from "../../deck";
 
 function Header() {
   const { setColumns, setCompleteDeckCount, points, setPoints } =

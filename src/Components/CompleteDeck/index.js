@@ -6,11 +6,9 @@ import "./completeDeck.scss";
 function CompleteDeck() {
   const { completeDeckCount } = useContext(context);
   return (
-    <div className="d-flex">
+    <div className="d-flex completeDeck">
       {[...Array(completeDeckCount)].map((e, i) => {
-        return (
-          <img className="completeDeck" key={i} src={backFace} alt=""></img>
-        );
+        return <img key={i} src={backFace} alt=""></img>;
       })}
     </div>
   );

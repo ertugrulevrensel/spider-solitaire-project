@@ -2,7 +2,7 @@ import React, { useContext, useEffect } from "react";
 import "./endGame.scss";
 import { context, timerContext } from "../../context";
 import restart from "../../assets/restart.png";
-import { shuffle } from "../../Deck";
+import { shuffle } from "../../deck";
 
 function EndGame() {
   const { setColumns, setCompleteDeckCount, points, setPoints } =
