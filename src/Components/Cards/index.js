@@ -8,7 +8,7 @@ import CompleteDeck from "../CompleteDeck";
 import { dragEnd, dragStart } from "../../dragProcess";
 import { context, timerContext } from "../../context";
 
-function CardSlot() {
+function Card() {
   const {
     columns,
     setColumns,
@@ -87,7 +87,9 @@ function CardSlot() {
                                       <b>{item.card.name}</b>
                                     </p>
                                     <div className="d-flex full-w full-h align-center justify-center p-absolute">
-                                      <span>♠</span>
+                                      <span className="user-select-none">
+                                        ♠
+                                      </span>
                                     </div>
                                   </div>
                                 )}
@@ -123,4 +125,4 @@ function CardSlot() {
   );
 }
 
-export default CardSlot;
+export default Card;

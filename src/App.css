@@ -81,6 +81,9 @@ input {
 .v-visible {
   visibility: visible;
 }
+.user-select-none {
+  user-select: none;
+}
 p {
   user-select: none;
 }
