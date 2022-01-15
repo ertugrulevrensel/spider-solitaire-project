@@ -1,10 +1,10 @@
 import React, { useState } from "react";
 import "./App.css";
-import Cards from "./Components/Cards";
+import Cards from "./components/Cards";
 import { context, timerContext } from "./context";
-import { itemColumns } from "./deck/index";
-import Header from "./Components/header";
-import EndGame from "./Components/endGame";
+import { itemColumns } from "./deck";
+import Header from "./components/header";
+import EndGame from "./components/endGame";
 import { useStopwatch } from "react-timer-hook";
 
 function App() {
