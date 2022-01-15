@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import "./App.css";
 import Cards from "./Components/Cards";
 import { context, timerContext } from "./context";
-import { itemColumns } from "./deck";
+import { itemColumns } from "./deck/index";
 import Header from "./Components/header";
 import EndGame from "./Components/endGame";
 import { useStopwatch } from "react-timer-hook";
