@@ -26,3 +26,7 @@ In the project directory you can run:
 npm install
 npm start
 ```
+
+## Screenshots
+
+![](./readme/game.PNG)
