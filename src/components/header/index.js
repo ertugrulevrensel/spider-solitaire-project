@@ -2,7 +2,7 @@ import React, { useContext } from "react";
 import "./header.scss";
 import restart from "../../assets/restart.png";
 import { context, timerContext } from "../../context";
-import { shuffle } from "../../deck";
+import newGame from "../../process/newGame";
 
 function Header() {
   const { setColumns, setCompleteDeckCount, points, setPoints } =
@@ -17,7 +17,7 @@ function Header() {
       <p>Score: {points}</p>
       <div
         onClick={() =>
-          shuffle(setColumns, setCompleteDeckCount, setPoints, reset)
+          newGame(setColumns, setCompleteDeckCount, setPoints, reset)
         }
         className="d-flex align-center restart"
       >

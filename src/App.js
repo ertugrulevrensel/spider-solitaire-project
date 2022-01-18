@@ -29,7 +29,11 @@ function App() {
         <context.Provider value={data}>
           <Header />
           <Cards />
-          {completeDeckCount === 8 ? <EndGame /> : null}
+          {completeDeckCount === 8 ? (
+            <EndGame winOrLose={"win"} />
+          ) : points < 0 ? (
+            <EndGame winOrLose={"lose"} />
+          ) : null}
         </context.Provider>
       </timerContext.Provider>
     </div>

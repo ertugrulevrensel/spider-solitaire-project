@@ -5,7 +5,7 @@ import React, { useEffect, useContext } from "react";
 import { shuffle } from "../../deck";
 import SideCard from "../SideCard";
 import CompleteDeck from "../CompleteDeck";
-import { dragEnd, dragStart } from "../../dragProcess";
+import { dragEnd, dragStart } from "../../process/dragProcess";
 import { context, timerContext } from "../../context";
 
 function Card() {
@@ -20,10 +20,12 @@ function Card() {
 
   const { reset } = useContext(timerContext);
 
+  // enter here when card drag started
   function onDragStart(start) {
     dragStart(start, columns);
   }
 
+  // enter here when card drag ended
   function onDragEnd(result) {
     dragEnd(
       result,
@@ -36,15 +38,7 @@ function Card() {
     );
   }
 
-  function dragStyle(style, snapshot) {
-    if (snapshot.isDragging) {
-      return {
-        ...style,
-        transitionDuration: `0.001s`,
-      };
-    }
-  }
-
+  // shuffle card
   useEffect(() => {
     shuffle(setColumns, setCompleteDeckCount, setPoints, reset);
   }, []); //eslint-disable-line
@@ -78,10 +72,11 @@ function Card() {
                                     ref={provided.innerRef}
                                     {...provided.draggableProps}
                                     {...provided.dragHandleProps}
-                                    style={dragStyle(
-                                      provided.draggableProps.style,
-                                      snapshot
-                                    )}
+                                    style={
+                                      snapshot.isDragging
+                                        ? provided.draggableProps.style
+                                        : null
+                                    }
                                   >
                                     <p>
                                       <b>{item.card.name}</b>

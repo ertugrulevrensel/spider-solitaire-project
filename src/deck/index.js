@@ -25,14 +25,13 @@ export const itemColumns = {
   8: { items: [] },
   9: { items: [] },
 };
-export let sideDesc = [];
-export function shuffle(setColumns, setCompleteDeckCount, setPoints, reset) {
-  reset();
-  setPoints(500);
-  setCompleteDeckCount(0);
-  sideDesc = [];
+export let sideDeck = [];
+export function shuffle(setColumns) {
+  sideDeck = [];
   let deckEight = [];
   let idCounter = 0;
+
+  // create all card deck
   for (let y = 0; y < card.length * 8; y++) {
     deckEight.push({
       id: idCounter,
@@ -44,6 +43,7 @@ export function shuffle(setColumns, setCompleteDeckCount, setPoints, reset) {
   }
   let tmpCol = { ...itemColumns };
 
+  // cards are dealt into columns
   for (let i = 0; i < 104; i++) {
     let random = Math.ceil(Math.random() * (103 - i));
     if (i < 50) {
@@ -70,14 +70,16 @@ export function shuffle(setColumns, setCompleteDeckCount, setPoints, reset) {
         },
       };
     } else {
+      // when end dealt into column process, remaining cards added to the side deck
       deckEight[random].isOpen = true;
       deckEight[random].isDrag = true;
-      sideDesc.push(deckEight[random]);
+      sideDeck.push(deckEight[random]);
     }
     deckEight.splice(random, 1);
   }
 
   for (let r = 0; r < 10; r++) {
+    //last card each column is made draggable
     tmpCol[r].items[tmpCol[r].items.length - 1].isDrag = true;
     tmpCol[r].items[tmpCol[r].items.length - 1].isOpen = true;
   }

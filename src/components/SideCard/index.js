@@ -1,20 +1,21 @@
 import React, { useContext } from "react";
-import { sideDesc } from "../../deck";
+import { sideDeck } from "../../deck";
 import backFace from "../../assets/bf3.webp";
 import "./SideCard.scss";
 import { context } from "../../context";
-import { isDraggable } from "../../dragProcess";
+import { isDraggable } from "../../process/dragProcess";
 
 function SideCard() {
   const { columns, setColumns } = useContext(context);
 
   function stockCard() {
+    // added 1 card every column when click side card
     let tmpCol = columns;
 
     for (let i = 0; i < 10; i++) {
       let tmpItems = tmpCol[i];
       let copiItem = [...tmpItems.items];
-      copiItem.splice(copiItem.length, 0, sideDesc.splice(0, 1)[0]);
+      copiItem.splice(copiItem.length, 0, sideDeck.splice(0, 1)[0]);
 
       tmpCol = {
         ...tmpCol,
@@ -30,7 +31,7 @@ function SideCard() {
 
   return (
     <div className="sideCard">
-      {[...Array(sideDesc.length / 10)].map((e, i) => {
+      {[...Array(sideDeck.length / 10)].map((e, i) => {
         return (
           <img onClick={() => stockCard()} key={i} src={backFace} alt=""></img>
         );

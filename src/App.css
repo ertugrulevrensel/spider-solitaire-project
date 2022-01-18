@@ -3,12 +3,13 @@
   margin: 0;
   border: 0;
   padding: 0;
-  /* font-family: "Nunito", sans-serif; */
   font-family: "EB Garamond", serif;
+  user-select: none;
 }
 body {
   background-color: #f2f2f2;
-  background-image: url("./assets/background.webp");
+  background-image: linear-gradient(70deg, rgb(81, 81, 255), rgb(0, 0, 165));
+  height: 100vh;
   width: 100%;
 }
 button {
@@ -82,8 +83,5 @@ input {
   visibility: visible;
 }
 .user-select-none {
-  user-select: none;
-}
-p {
   user-select: none;
 }
